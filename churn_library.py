@@ -189,45 +189,37 @@ def classification_report_image(y_train: pd.DataFrame,
              None
     '''
     plt.clf()
-    fig, axs = plt.subplots(2)
     plt.rc('figure', figsize=(5, 5))
-    axs[0].text(0.01, 1.25, str('Random Forest Train'), {
+    plt.text(0.01, 1.0, str('Random Forest Train'), {
         'fontsize': 10}, fontproperties='monospace')
-    axs[0].text(
-        0.01, 0.05, str(
-            classification_report(
-                y_test, y_test_preds_rf)), {
+    report_str = str(classification_report(y_train, y_train_preds_rf))
+    plt.text(
+        0.01, 0.6, report_str, {
             'fontsize': 10}, fontproperties='monospace')
-    axs[0].axis('off')
-    axs[1].text(0.01, 0.6, str('Random Forest Test'), {
-        'fontsize': 10}, fontproperties='monospace')
-    axs[1].text(
-        0.01, 0.7, str(
-            classification_report(
-                y_train, y_train_preds_rf)), {
+    plt.text(0.01, 0.5, str('Random Forest Test'), {'fontsize': 10},
+             fontproperties='monospace')
+    report_str = str(classification_report(y_test, y_test_preds_rf))
+    plt.text(
+        0.01, 0.0, report_str, {
             'fontsize': 10}, fontproperties='monospace')
-    axs[1].axis('off')
-    fig.savefig(cst.RF_RES_IMG_PATH)
+    plt.axis('off')
+    plt.savefig(cst.RF_RES_IMG_PATH)
 
     plt.clf()
-    fig, axs = plt.subplots(2)
     plt.rc('figure', figsize=(5, 5))
-    axs[0].text(0.01, 1.25, str('Logistic Regression Train'),
-                {'fontsize': 10}, fontproperties='monospace')
-    axs[0].text(
-        0.01, 0.05, str(
-            classification_report(
-                y_train, y_train_preds_lr)), {
+    plt.text(0.01, 1.0, str('Logistic Regression Train'), {'fontsize': 10},
+             fontproperties='monospace')
+    report_str = str(classification_report(y_train, y_train_preds_lr))
+    plt.text(
+        0.01, 0.6, report_str, {
             'fontsize': 10}, fontproperties='monospace')
-    axs[0].axis('off')
-    axs[1].text(0.01, 0.6, str('Logistic Regression Test'), {
-        'fontsize': 10}, fontproperties='monospace')
-    axs[1].text(
-        0.01, 0.7, str(
-            classification_report(
-                y_test, y_test_preds_lr)), {
+    plt.text(0.01, 0.5, str('Logistic Regression Test'), {'fontsize': 10},
+             fontproperties='monospace')
+    report_str = str(classification_report(y_test, y_test_preds_lr))
+    plt.text(
+        0.01, 0.0, report_str, {
             'fontsize': 10}, fontproperties='monospace')
-    axs[1].axis('off')
+    plt.axis('off')
     plt.savefig(cst.LOGISTIC_RES_IMG_PATH)
 
 

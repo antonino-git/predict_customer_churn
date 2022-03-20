@@ -60,28 +60,28 @@ def perform_eda(data: pd.DataFrame):
     plt.figure(figsize=(20, 10))
 
     # Generate Churn histogram and save it in images folder
-    data['Churn'].hist();
+    data['Churn'].hist()
     plt.savefig(cst.CHURN_DISTRIBUTION_IMG_PATH)
 
     # Generate customer age histogram and save it in images folder
     plt.figure(figsize=(20, 10))
-    data['Customer_Age'].hist();
+    data['Customer_Age'].hist()
     plt.savefig(cst.CUSTOMER_AGE_DISTRIBUTION_IMG_PATH)
 
     # Generate marital status histogram and save it in images folder
     plt.figure(figsize=(20, 10))
-    data.Marital_Status.value_counts('normalize').plot(kind='bar');
+    data.Marital_Status.value_counts('normalize').plot(kind='bar')
     plt.savefig(cst.MARITAL_DISTRIBUTION_IMG_PATH)
 
     # Generate total transaction distribution diagram and save it in images
     # folder
     plt.figure(figsize=(20, 10))
-    sns.histplot(data['Total_Trans_Ct'], kde=True, stat="density", linewidth=0);
+    sns.histplot(data['Total_Trans_Ct'], kde=True, stat="density", linewidth=0)
     plt.savefig(cst.TOTAL_TRANSACTION_IMG_PATH)
 
     # Generate feature heatmap and save it in images folder
     plt.figure(figsize=(20, 10))
-    sns.heatmap(data.corr(), annot=False, cmap='Dark2_r', linewidths=2);
+    sns.heatmap(data.corr(), annot=False, cmap='Dark2_r', linewidths=2)
     plt.savefig(cst.HEATMAP_IMG_PATH)
 
 
@@ -168,12 +168,12 @@ def perform_feature_engineering(data: pd.DataFrame, response: str):
     return train_test_split(x_data, y_data, test_size=0.3, random_state=42)
 
 
-def classification_report_image(y_train:pd.DataFrame,
-                                y_test:pd.DataFrame,
-                                y_train_preds_lr:np.ndarray,
-                                y_train_preds_rf:np.ndarray,
-                                y_test_preds_lr:np.ndarray,
-                                y_test_preds_rf:np.ndarray):
+def classification_report_image(y_train: pd.DataFrame,
+                                y_test: pd.DataFrame,
+                                y_train_preds_lr: np.ndarray,
+                                y_train_preds_rf: np.ndarray,
+                                y_test_preds_lr: np.ndarray,
+                                y_test_preds_rf: np.ndarray):
     '''
     produces classification report for training and testing results and stores
     report as image in images folder
@@ -192,14 +192,20 @@ def classification_report_image(y_train:pd.DataFrame,
     fig, axs = plt.subplots(2)
     plt.rc('figure', figsize=(5, 5))
     axs[0].text(0.01, 1.25, str('Random Forest Train'), {
-             'fontsize': 10}, fontproperties='monospace')
-    axs[0].text(0.01, 0.05, str(classification_report(y_test, y_test_preds_rf)), {
-             'fontsize': 10}, fontproperties='monospace')
+        'fontsize': 10}, fontproperties='monospace')
+    axs[0].text(
+        0.01, 0.05, str(
+            classification_report(
+                y_test, y_test_preds_rf)), {
+            'fontsize': 10}, fontproperties='monospace')
     axs[0].axis('off')
     axs[1].text(0.01, 0.6, str('Random Forest Test'), {
-             'fontsize': 10}, fontproperties='monospace')
-    axs[1].text(0.01, 0.7, str(classification_report(y_train, y_train_preds_rf)), {
-             'fontsize': 10}, fontproperties='monospace')
+        'fontsize': 10}, fontproperties='monospace')
+    axs[1].text(
+        0.01, 0.7, str(
+            classification_report(
+                y_train, y_train_preds_rf)), {
+            'fontsize': 10}, fontproperties='monospace')
     axs[1].axis('off')
     fig.savefig(cst.RF_RES_IMG_PATH)
 
@@ -207,19 +213,28 @@ def classification_report_image(y_train:pd.DataFrame,
     fig, axs = plt.subplots(2)
     plt.rc('figure', figsize=(5, 5))
     axs[0].text(0.01, 1.25, str('Logistic Regression Train'),
-             {'fontsize': 10}, fontproperties='monospace')
-    axs[0].text(0.01, 0.05, str(classification_report(y_train, y_train_preds_lr)), {
-             'fontsize': 10}, fontproperties='monospace')
+                {'fontsize': 10}, fontproperties='monospace')
+    axs[0].text(
+        0.01, 0.05, str(
+            classification_report(
+                y_train, y_train_preds_lr)), {
+            'fontsize': 10}, fontproperties='monospace')
     axs[0].axis('off')
     axs[1].text(0.01, 0.6, str('Logistic Regression Test'), {
-             'fontsize': 10}, fontproperties='monospace')
-    axs[1].text(0.01, 0.7, str(classification_report(y_test, y_test_preds_lr)), {
-             'fontsize': 10}, fontproperties='monospace')
+        'fontsize': 10}, fontproperties='monospace')
+    axs[1].text(
+        0.01, 0.7, str(
+            classification_report(
+                y_test, y_test_preds_lr)), {
+            'fontsize': 10}, fontproperties='monospace')
     axs[1].axis('off')
     plt.savefig(cst.LOGISTIC_RES_IMG_PATH)
 
 
-def feature_importance_plot(model:GridSearchCV, x_data:pd.DataFrame, output_pth:str):
+def feature_importance_plot(
+        model: GridSearchCV,
+        x_data: pd.DataFrame,
+        output_pth: str):
     '''
     creates and stores the feature importances in pth
     input:
@@ -246,15 +261,19 @@ def feature_importance_plot(model:GridSearchCV, x_data:pd.DataFrame, output_pth:
     plt.ylabel('Importance')
 
     # Add bars
-    plt.bar(range(x_data.shape[1]), importances[indices]);
+    plt.bar(range(x_data.shape[1]), importances[indices])
 
     # Add feature names as x-axis labels
-    plt.xticks(range(x_data.shape[1]), names, rotation=90);
+    plt.xticks(range(x_data.shape[1]), names, rotation=90)
 
     plt.savefig(output_pth)
 
 
-def train_models(x_train:pd.DataFrame, x_test:pd.DataFrame, y_train:pd.DataFrame, y_test:pd.DataFrame):
+def train_models(
+        x_train: pd.DataFrame,
+        x_test: pd.DataFrame,
+        y_train: pd.DataFrame,
+        y_test: pd.DataFrame):
     '''
     train, store model results: images + scores, and store models
     input:
@@ -300,7 +319,7 @@ def train_models(x_train:pd.DataFrame, x_test:pd.DataFrame, y_train:pd.DataFrame
     print('train results')
     print(classification_report(y_train, y_train_preds_lr))
 
-    lrc_plot = plot_roc_curve(lrc, x_test, y_test);
+    lrc_plot = plot_roc_curve(lrc, x_test, y_test)
 
     # plots
     plt.figure(figsize=(15, 8))
@@ -310,8 +329,8 @@ def train_models(x_train:pd.DataFrame, x_test:pd.DataFrame, y_train:pd.DataFrame
         x_test,
         y_test,
         ax=axis_x,
-        alpha=0.8);
-    lrc_plot.plot(ax=axis_x, alpha=0.8);
+        alpha=0.8)
+    lrc_plot.plot(ax=axis_x, alpha=0.8)
     plt.show()
 
     # save best model
@@ -325,8 +344,8 @@ def train_models(x_train:pd.DataFrame, x_test:pd.DataFrame, y_train:pd.DataFrame
 
     plt.figure(figsize=(15, 8))
     axis_x = plt.gca()
-    plot_roc_curve(rfc_model, x_test, y_test, ax=axis_x, alpha=0.8);
-    lrc_plot.plot(ax=axis_x, alpha=0.8);
+    plot_roc_curve(rfc_model, x_test, y_test, ax=axis_x, alpha=0.8)
+    lrc_plot.plot(ax=axis_x, alpha=0.8)
     plt.savefig(cst.ROC_CURVE_RES_IMG_PATH)
     plt.show()
 

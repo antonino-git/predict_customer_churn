@@ -1,4 +1,8 @@
-scikit-learn==0.22
+scikit-learn==0.24.1
 shap
 pylint
 autopep8
+matplotlib
+seaborn
+joblib
+numpy
